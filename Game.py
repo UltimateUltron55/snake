@@ -7,6 +7,8 @@ import Scoreboard
 
 def run_game():
   pygame.init()
+  crash_sound = pygame.mixer.Sound("Crash.wav")
+  pygame.mixer.music.load("Background.wav")
   screen = pygame.display.set_mode((800, 650))
   pygame.display.set_caption("Snake")
   endgame = False
@@ -26,10 +28,14 @@ def run_game():
   pygame.display.flip()
   print(len(snake.positions))
   time.sleep(2)
+  pygame.mixer.music.play(-1)
   while True:
       if endgame == False:
           if snake.collided():
+             pygame.mixer.music.stop()
+             crash_sound.play()
              endgame = True
+             time.sleep(2)
           if snake.eaten_food():
              print("Snake has eaten food")
              snake.extend = True

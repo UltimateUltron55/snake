@@ -21,8 +21,9 @@ class Scoreboard():
         
     def check_high_score(self):
         with open("highscore.txt") as highscore:
-            lines = str(highscore.readlines()[0])
-            high_score = int(lines)
+            lines = highscore.readlines()
+            high_score = lines[0]
+            high_score = int(high_score)
         return high_score
         
     def prep_high_score(self, highscore):
@@ -33,9 +34,18 @@ class Scoreboard():
         
     def incr_high_score(self, highscore, score):
         if score > highscore:
-            with open("highscore.txt") as file:
-                lines = int(file.readlines()[0])
-                return lines
+            with open("highscore.txt", mode='w') as file:
+                file.write(str(score))
+                
+    def prep_msg(self, str):
+        self.msg_img = self.font.render(str, True, self.text_colour, (0, 0, 0))
+                
+    def show_msg(self, str):
+        self.prep_msg(str)
+        self.screen.blit(self.msg_img, (300, 325))
+
+                
+
         
         
     

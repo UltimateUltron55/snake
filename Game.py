@@ -3,7 +3,7 @@ import time
 import pygame
 import Arena
 import Snake
-import scoreboard
+import Scoreboard
 
 def run_game():
   pygame.init()
@@ -13,12 +13,10 @@ def run_game():
   arena = Arena.Arena(screen)
   snake = Snake.Snake(screen, arena)
   arena.snake = snake
-  scoreboard1= scoreboard.Scoreboard(screen)
+  scoreboard1= Scoreboard.Scoreboard(screen)
   highscore = scoreboard1.check_high_score()
-  print(type(highscore))
   scoreboard1.prep_high_score(highscore)
   scoreboard1.show_high_score()
-  print(arena.snake)
   arena.update_food()
   snake.blitme()
   arena.draw_walls()
@@ -38,7 +36,6 @@ def run_game():
              arena.destroy_food()
              arena.update_food()
              arena.draw_food()
-             print(len(snake.positions))
              scoreboard1.score += 10
              scoreboard1.prep_score()
              scoreboard1.show_score()
@@ -48,9 +45,11 @@ def run_game():
              time.sleep(0.3) 
     
       else:
-          highscore = scoreboard1.incr_high_score(highscore, scoreboard1.score)
+          scoreboard1.incr_high_score(highscore, scoreboard1.score)
+          highscore = scoreboard1.check_high_score()
           scoreboard1.prep_high_score(highscore)
           scoreboard1.show_high_score()
+          scoreboard1.show_msg("Game Over")
       snake.check_events()
       pygame.display.flip()
 
